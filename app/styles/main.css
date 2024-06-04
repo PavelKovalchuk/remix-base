@@ -1,7 +1,3 @@
-* {
-  box-sizing: border-box;
-}
-
 :root {
   --color-primary-10: #e7cffe;
   --color-primary-50: #dcbcfb;
@@ -21,6 +17,10 @@
   --color-secondary-400: hsl(24, 96%, 53%);
   --color-secondary-500: hsl(24, 100%, 50%);
   --color-secondary-600: hsl(22, 90%, 50%);
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {

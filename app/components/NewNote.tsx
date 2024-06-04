@@ -1,4 +1,6 @@
-import styles from './NewNote.css';
+import type { LinksFunction } from "@remix-run/node";
+
+import styles from './NewNote.css?url';
 
 function NewNote() {
   return (
@@ -9,10 +11,10 @@ function NewNote() {
       </p>
       <p>
         <label htmlFor="content">Content</label>
-        <textarea id="content" name="content" rows="5" required />
+        <textarea id="content" name="content" rows={5} required />
       </p>
       <div className="form-actions">
-        <button>Add Note</button>
+        <button type="submit">Add Note</button>
       </div>
     </form>
   );
@@ -20,6 +22,7 @@ function NewNote() {
 
 export default NewNote;
 
-export function links() {
-  return [{ rel: 'stylesheet', href: styles }];
-}
+
+export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: styles },
+];
