@@ -1,17 +1,26 @@
 import { redirect } from '@remix-run/node';
-import type { ActionFunctionArgs, LinksFunction } from "@remix-run/node"; 
+import type { ActionFunctionArgs, LinksFunction } from '@remix-run/node';
+import { useLoaderData } from '@remix-run/react';
 
 import NewNote, { links as newNoteLinks } from '~/components/NewNote';
+import NoteList, { INote, links as noteListLinks } from '~/components/NoteList';
 import { getStoredNotes, storeNotes } from '~/data/notesHelpers';
-
 
 // For GET request
 export default function NotesPage() {
+  const notes = useLoaderData();
+
   return (
     <main>
       <NewNote />
+      <NoteList notes={notes as INote[]} />
     </main>
   );
+}
+
+export async function loader() {
+  const notes = await getStoredNotes();
+  return notes;
 }
 
 // Reserved function name to handle backend requests
@@ -30,5 +39,5 @@ export async function action({ request }: ActionFunctionArgs) {
 
 // Reserved function name to inject styles
 export const links: LinksFunction = () => {
-  return [...newNoteLinks()];
-}
+  return [...newNoteLinks(), ...noteListLinks()];
+};
