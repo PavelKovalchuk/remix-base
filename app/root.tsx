@@ -7,6 +7,7 @@ import {
   Link,
   useRouteError,
   isRouteErrorResponse,
+  LiveReload,
 } from '@remix-run/react';
 import type { LinksFunction } from '@remix-run/node';
 
@@ -29,6 +30,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <ScrollRestoration />
         <Scripts />
+        <LiveReload />
       </body>
     </html>
   );
