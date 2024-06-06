@@ -4,8 +4,11 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from "@remix-run/react";
-import type { LinksFunction } from "@remix-run/node";
+  Link,
+  useRouteError,
+  isRouteErrorResponse,
+} from '@remix-run/react';
+import type { LinksFunction } from '@remix-run/node';
 
 import MainNavigation from '~/components/MainNavigation';
 import styles from '~/styles/main.css?url';
@@ -35,8 +38,33 @@ export default function App() {
   return <Outlet />;
 }
 
+// will be rendered instead of App component if any error occurs
+export function ErrorBoundary() {
+  const error = useRouteError() as { message: string };
+
+  // Instead of CatchBoundary
+  if (isRouteErrorResponse(error)) {
+    return (
+      <main className="error">
+        <h1>{error.statusText}</h1>
+        <p>{error.data?.message || 'Something went wrong!'}</p>
+        <p>
+          Back to <Link to="/">safety</Link>!
+        </p>
+      </main>
+    );
+  }
+
+  return (
+    <main className="error">
+      <h1>An error occurred!</h1>
+      <p>{error?.message}</p>
+      <p>
+        Back to <Link to="/">safety</Link>!
+      </p>
+    </main>
+  );
+}
 
 // Reserved function name to inject styles
-export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: styles },
-];
+export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }];
