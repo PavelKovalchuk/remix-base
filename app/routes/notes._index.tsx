@@ -1,6 +1,5 @@
-import { redirect } from '@remix-run/node';
-import type { ActionFunctionArgs, LinksFunction } from '@remix-run/node';
-import { Link, isRouteErrorResponse, json, useLoaderData, useRouteError } from '@remix-run/react';
+import { redirect, ActionFunctionArgs, LinksFunction, json, MetaFunction } from '@remix-run/node';
+import { Link, isRouteErrorResponse, useLoaderData, useRouteError } from '@remix-run/react';
 
 import NewNote, { links as newNoteLinks } from '~/components/NewNote';
 import NoteList, { INote, links as noteListLinks } from '~/components/NoteList';
@@ -17,6 +16,15 @@ export default function NotesPage() {
     </main>
   );
 }
+
+export const meta: MetaFunction = () => {
+  return [
+    {
+      title: 'All Notes',
+      description: 'Manage your notes with ease.',
+    },
+  ];
+};
 
 export async function loader() {
   const notes = await getStoredNotes();
